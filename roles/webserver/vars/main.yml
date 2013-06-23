@@ -1,0 +1,4 @@
+---
+
+ruby_version: '1.9.3-p286'
+ruby_url: 'ftp://ftp.ruby-lang.org//pub/ruby/1.9/ruby-{{ ruby_version }}.tar.gz'

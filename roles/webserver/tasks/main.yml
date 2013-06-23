@@ -1,0 +1,35 @@
+---
+- name: Install ruby dependencies
+  apt: pkg=$item state=installed update-cache=yes
+  with_items:
+    - build-essential
+    - git-core
+    - libreadline6-dev
+    - libyaml-dev
+    - libsqlite3-dev
+    - sqlite3
+    - libgdbm-dev
+    - libncurses5-dev
+    - libtool
+    - bison
+    - libffi-dev
+    - libdigest-hmac-perl
+    - unzip
+    - zlib1g
+    - zlib1g-dev
+
+- name: Download ruby
+  get_url: url=$ruby_url dest=/home/ubuntu/ruby-{{ ruby_version }}.tar
+
+- name: Extract ruby
+  command: tar -zxf /home/ubuntu/ruby-$ruby_version.tar creates=/home/ubuntu/ruby-{{ ruby_version }}
+
+- name: Make, configure, and install ruby
+  command: $item chdir=/home/ubuntu/ruby-$ruby_version
+  with_items:
+    - ./configure
+    - make
+    - sudo make install
+
+- name: Create deploy user
+  user: name=deploy shell=/bin/bash

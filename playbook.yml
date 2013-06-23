@@ -1,0 +1,10 @@
+---
+
+- name: Example playbook for Ansible
+
+  hosts: webservers
+  roles:
+    - webserver
+    - db
+  user: ubuntu
+  sudo: true

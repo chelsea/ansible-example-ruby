@@ -1,0 +1,36 @@
+---
+
+  - name: Install packages
+    apt: pkg=$item state=installed update-cache=yes
+    with_items:
+      - python-software-properties
+      - libcurl4-openssl-dev
+      - libxml2-dev
+      - libfuse-dev
+      - comerr-dev
+      - libfuse2
+      - libidn11-dev
+      - libkrb5-dev
+      - libldap2-dev
+      - libselinux1-dev
+      - libsepol1-dev
+      - pkg-config
+      - fuse-utils
+      - sshfs
+      - build-essential
+      - tmux
+      - autoconf
+      - curl
+      - libxslt1-dev
+      - postgresql-9.2
+      - libpq-dev
+      - language-pack-en
+      - python-psycopg2
+
+  - name: Set up postgresql.conf
+    copy: src=files/postgresql.conf dest=/etc/postgresql/9.2/main/postgresql.conf
+    notify:
+      - restart postgres
+
+  - name: Set up database user
+    postgresql_user: user={{ db_user }} password={{ db_password }}
